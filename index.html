@@ -1,0 +1,535 @@
+ <!DOCTYPE html>
+ <html lang="pt-br">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🔄🤡💃 Make a Move!? 🙆‍♂️🧐🎮</title>
+  <link rel="shortcut icon" href="./3176382.png" type="image/png">
+  <style>
+  body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  text-align: center;
+  background: linear-gradient(to bottom right, #1500ff, #ff0000);
+  padding: 20px;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #000000;
+  transition: background-color 0.5s ease;
+  position: relative;
+  overflow: hidden;
+  }
+
+  h1 {
+  color: #000000;
+  font-size: 3em;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  letter-spacing: 1.5px;
+  z-index: 2;
+  }
+
+  button {
+  margin: 15px;
+  padding: 12px 28px;
+  font-size: 20px;
+  cursor: pointer;
+  border: none;
+  background-color: #1bbaa7;
+  color: rgb(255, 255, 255);
+  border-radius: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  z-index: 2;
+  }
+
+  button:hover {
+  background-color: #264653;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  button:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  }
+
+  select {
+  margin-top: 25px;
+  padding: 10px 15px;
+  font-size: 18px;
+  border: 2px solid #a27b00;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #333;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23a27b00" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  z-index: 2;
+  }
+
+  select:focus {
+  outline: none;
+  border-color: #2a9d8f;
+  box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.4);
+  }
+
+  #scoreboard,
+  #game,
+  #timer,
+  #scoreDisplay {
+  margin-top: 30px;
+  font-size: 1.8em;
+  color: #555;
+  padding: 15px 25px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  display: inline-block;
+  min-width: 200px;
+  text-align: center;
+  transition: all 0.4s ease-in-out;
+  position: relative;
+  z-index: 2;
+  }
+
+  #game {
+  border: 2px solid #e76f51;
+  color: #e76f51;
+  }
+
+  #timer {
+  border: 2px solid #f4a261;
+  color: #f4a261;
+  }
+
+  #scoreDisplay {
+  border: 2px solid #2a9d8f;
+  color: #2a9d8f;
+  font-weight: bold;
+  }
+
+  #inicioButton {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  }
+
+  @media (max-width: 768px) {
+  h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  }
+
+  button {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin: 10px;
+  }
+
+  select,
+  #game,
+  #timer,
+  #scoreDisplay {
+  margin-top: 20px;
+  font-size: 1.5em;
+  padding: 10px 20px;
+  }
+  }
+
+  @media (max-width: 480px) {
+  h1 {
+  font-size: 2em;
+  margin-bottom: 15px;
+  }
+
+  button {
+  padding: 8px 15px;
+  font-size: 14px;
+  margin: 8px;
+  }
+
+  select,
+  #game,
+  #timer,
+  #scoreDisplay {
+  margin-top: 15px;
+  font-size: 1.2em;
+  padding: 8px 15px;
+  min-width: unset;
+  }
+
+  #conteudo {
+  display: none;
+  }
+  #inicioButton {
+  bottom: 10px;
+  }
+  }
+
+  .warning {
+  color: red;
+  font-weight: bold;
+  }
+
+  .alarm {
+  animation: blink 1s infinite alternate;
+  }
+
+  @keyframes blink {
+  from { opacity: 1; }
+  to { opacity: 0.5; }
+  }
+
+  .floating-letter {
+  position: fixed; 
+  top: 10%; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  font-size: 12em; 
+  font-weight: bold;
+  color: rgb(255, 255, 0); 
+  opacity: 1; 
+  user-select: none;
+  z-index: 3; 
+  animation: blinkTop 1s infinite alternate; 
+}
+
+@keyframes blinkTop {
+  0% { opacity: 1; }
+  100% { opacity: 0.2; } 
+}
+  </style>
+ </head>
+ <body>
+  <div id="conteudo" style="display: none;">
+  <h1>🔄🤡💃 Make a Move!? 🙆‍♂️🧐🎮</h1>
+  <div id="scoreboard">Equipe A: <span id="score1">0</span> | Equipe B: <span id="score2">0</span></div>
+
+  <div id="modeSelection">
+  <button onclick="startShuffledMode()">Modo Alternativo</button>
+  <button onclick="showThemeSelector()">Modo por Temas</button>
+  </div>
+
+  <div id="themeSelection" style="display: none;">
+  <label for="themeSelect">Escolha um tema:</label>
+  <select id="themeSelect"></select>
+  <button onclick="selectStartingTeam()">Iniciar</button>
+  </div>
+  <div id="teamSelection" style="display: none;">
+  <p>Escolha a equipe que começará:</p>
+  <button onclick="startGame(1)">Equipe A</button>
+  <button onclick="startGame(2)">Equipe B</button>
+  </div>
+  <div id="game" style="display:none;">
+  <h2 id="word"></h2>
+  <div id="timer">Tempo: 60s</div>
+  <button onclick="nextWord()">Pular</button>
+  <button onclick="correctGuess()">Acertamos</button>
+  </div>
+  <button id="inicioButton" onclick="inicio()">Página Inicial</button>
+
+  <audio id="alarmSound" src="./kitchen-timer-87485.mp3"></audio>
+  </div>
+
+  <script>
+  const temas = {
+  "Profissões": [
+  "Médico 🩺", "Professor 🍎", "Bombeiro 🚒", "Engenheiro 🏗️", "Advogado ⚖️", "Policial 👮", "Enfermeiro 💉", "Dentista 😬", "Cozinheiro 👨‍🍳", "Piloto ✈️",  "Arquiteto 🏛️", "Veterinário 🐶", "Jornalista 📰", "Programador 💻", "Designer 🎨",  "Psicólogo 🧠", "Agricultor 🌾", "Eletricista ⚡", "Mecânico 🔧", "Carpinteiro 🪚",
+  "Padeiro 🥖", "Garçom 🍽️", "Cabeleireiro 💇", "Fotógrafo 📸", "Artista 🎭", "Músico 🎵", "Ator 🎬", "Cantor 🎤", "Escritor ✍️", "Economista 💰", "Contador 🧮", "Administrador 📊", "Vendedor 💼", "Jogador de Futebol ⚽", "Nutricionista 🥗",
+  "Fisioterapeuta 💪", "Biólogo 🔬", "Astronauta 🚀", "Pesquisador 🔍", "Motorista 🚗",  "Corretor 🏠", "Segurança 🛡️", "Juiz ⚖️", "DJ 🎧", "Youtuber 🎥",
+  "Influenciador 📱", "Gamer 🎮", "Tatuador 🖋️", "Massagista 💆", "Barista ☕",  "Geólogo 🌍", "Químico ⚗️", "Físico 🧪", "Matemático ➗", "Historiador 📚",
+  "Tradutor 🌐", "Intérprete 🗣️", "Terapeuta Ocupacional 👐", "Radialista 📻", "Cientista de Dados 📈", "Analista de Sistemas 🖥️", "Desenvolvedor de Jogos 🕹️", "Esteticista 💅", "Costureiro 🧵", "Sapateiro 👞",
+  "Marceneiro 🪑", "Pintor 🎨", "Pedreiro 🧱", "Soldador 🔩", "Operador de Máquinas ⚙️",  "Zelador 🧹", "Porteiro 🛎️", "Babá 👶", "Cuidador de Idosos 👵", "Recepcionista 🧾",
+  "Auxiliar Administrativo 🗃️", "Secretária 📝", "Bibliotecário 📖", "Instrutor de Autoescola 🚘", "Piloto de Drones 🛸",  "Meteorologista 🌦️", "Oceanógrafo 🌊", "Engenheiro Ambiental 🌱",  "Chef de Cozinha 👨‍🍳", "Maquiador 💄", "Alfaiate 👔", "Recreador 🛝", "Monitora Escolar 🎒",
+  "Operador de Telemarketing ☎️", "Fiscal de Loja 🧾", "Manicure 💅", "Maquinista 🚂", "Controlador de Tráfego Aéreo 🛫",  "Pescador 🎣", "Guarda Florestal 🌲", "Agente de Turismo 🌍", "Guia de Museu 🖼️", "Atendente de Farmácia 💊",
+  "Desentupidor 🚽", "Lavador de Carros 🧽", "Serralheiro 🪛", "Técnico em Informática 🧰", "Técnico em Enfermagem 🏥",  "Paramédico 🚑", "Instrutor de Yoga 🧘", "Instrutor de Academia 🏋️", "Coach de Vida 🌟", "Consultor de Imagem 👔",
+  "Cerimonialista 🎊", "Wedding Planner 💍", "Modelista 👗", "Estilista 👠", "Agente de Viagens ✈️",  "Piloto de Helicóptero 🚁", "Engenheiro de Software 🖱️", "Administrador de Redes 🌐", "Especialista em Marketing 📣", "Corretor de Seguros 🧾",
+  "Representante Comercial 📋", "Analista Financeiro 📉", "Engenheiro Civil 🏗️", "Engenheiro Mecânico ⚙️", "Engenheiro Elétrico 🔌",  "Operador de Caixa 💳", "Motoboy 🛵", "Agente de Limpeza 🧼", "Despachante 📂", "Engenheiro Químico 🧪"
+],
+"Objetos": [
+  "Clipes de papel 🖇️", "Grampeador 📎", "Borracha 🧽", "Régua 📏", "Apontador ✏️",  "Envelope ✉️", "Etiqueta 🏷️", "Calculadora 🧮", "Projetor 📽️", "Tela de projeção 🖥️",
+  "Capacete ⛑️", "Coletor de lixo 🗑️", "Escada 🪜", "Trena 📏", "Fita adesiva 🧷",  "Cadeira de rodas ♿", "Carrinho de compras 🛒", "Carrinho de bebê 👶", "Tapete 🪵", "Almofada 🛏️",
+  "Cobertor 🛌", "Travesseiro 💤", "Guarda-roupa 🚪", "Criado-mudo 🗄️", "Abajur 🛋️",  "Fogareiro 🏕️", "Barraca ⛺", "Cooler 🧊", "Drone 🚁", "Bússola 🧭",
+  "Cantil 🥤", "Moeda 🪙", "Carteira 👛", "Bolsa 👜", "Mala de viagem 🧳",  "Rádio 📻", "Televisão 📺", "Controle remoto 🎛️", "Disco de vinil 💿", "Pen drive 💾",
+  "Carregador 🔌", "Bateria 🔋", "Disquete 🖲️", "HD externo 📀", "Joystick 🎮", "Lápis ✏️", "Cadeira 🪑", "Mesa 🏠", "Celular 📱", "Bola ⚽", "Chave 🔑", "Relógio ⌚", "Livro 📖", "Computador 💻", "Tesoura ✂️", 
+"Caneta 🖊️", "Caderno 📓", "Óculos 👓", "Garfo 🍴", "Faca 🔪", "Colher 🥄", "Prato 🍽️", "Copo 🥤", "Garrafa 🍼", "Panela 🍳", "Ventilador 💨", "Lâmpada 💡", "Espelho 🪞", "Escova de dentes 🪥", "Sabonete 🧼", "Xampu 🧴", "Vassoura 🧹", "Aspirador 🌀", "Máquina de lavar 🧺", "Ferro de passar 👔", 
+"Fone de ouvido 🎧", "Teclado ⌨️", "Mouse 🖱️", "Impressora 🖨️", "Webcam 📹", "Balança ⚖️", "Termômetro 🌡️", "Mochila 🎒", "Guarda-chuva ☔", "Lanterna 🔦", "Martelo 🔨", "Chave de fenda 🛠️", "Pincel 🖌️", "Rolo de pintura 🎨", "Tubo 🚰", "Vaso sanitário 🚽", "Pia 🚰", "Cortina 🪟", "Quadro 🖼️", "Violão 🎸", 
+"Piano 🎹", "Bateria 🥁", "Dado 🎲", "Tabuleiro 🎯", "Boneca 🪆", "Carrinho 🚗", "Bicicleta 🚲", "Skate 🛹", "Bola de basquete 🏀", "Bola de futebol ⚽", "Raquete 🎾", "Taco ⚾", "Troféu 🏆", "Câmera 📷", "Detector 🔍", "Extintor 🧯", "Cadeado 🔒", "Fogão 🍳", "Geladeira ❄️", "Micro-ondas 🍲", "Zíper 🧵", "Botão 🧷", "Agulha 🪡", "Linha de costura 🧶", "Tesoura de unha ✂️",
+  "Pinça 🔬", "Espátula 🍰", "Ralador 🧀", "Abridor de garrafa 🍾", "Saca-rolhas 🍷", "Filtro de café ☕", "Assadeira 🍪", "Batedeira 🥣", "Tábua de corte 🔪", "Escorredor 🍝",
+  "Balde 🪣", "Mangueira 🌿", "Regador 🌼", "Enxada ⚒️", "Pá 🛠️", "Capacho 🚪", "Fechadura 🗝️", "Interruptor 🔘", "Tomada 🔌", "Protetor de tomada 🧷",
+  "Lixeira 🚮", "Paninho de limpeza 🧼", "Esponja 🧽", "Rodo 🧹", "Desentupidor 🪠", "Espremedor 🍋", "Paninho de prato 🧻", "Toalha 🛁", "Saboneteira 🧼", "Dispenser de sabão 🧴",
+  "Porta-escova 🪥", "Cesto de roupa 🧺", "Prendedor de roupa 🧷", "Varal 🧵", "Cabide 👔", "Espremedor de alho 🧄", "Moedor de pimenta 🌶️", "Relógio de parede 🕰️", "Ampulheta ⌛", "Termômetro digital 🌡️",
+  "Placa de sinalização 🚧", "Cone de trânsito 🚨", "Apontador elétrico 🔌", "Máquina de cartão 💳", "Torneira 🚿"
+],
+"Países": [ "Brasil 🇧🇷", "Estados Unidos 🇺🇸", "Canadá 🇨🇦", "México 🇲🇽", "Argentina 🇦🇷", "França 🇫🇷", "Espanha 🇪🇸", "Itália 🇮🇹", "Alemanha 🇩🇪", "Portugal 🇵🇹", 
+"Reino Unido 🇬🇧", "Japão 🇯🇵", "China 🇨🇳", "Coreia do Sul 🇰🇷", "Índia 🇮🇳", "Rússia 🇷🇺", "Austrália 🇦🇺", "Nova Zelândia 🇳🇿", "África do Sul 🇿🇦", "Egito 🇪🇬", 
+"Grécia 🇬🇷", "Turquia 🇹🇷", "Tailândia 🇹🇭", "Vietnã 🇻🇳", "Indonésia 🇮🇩", "Chile 🇨🇱", "Colômbia 🇨🇴", "Peru 🇵🇪", "Costa Rica 🇨🇷", "Cuba 🇨🇺", "Uruguai 🇺🇾", "Paraguai 🇵🇾", "Bolívia 🇧🇴", "Equador 🇪🇨", "Venezuela 🇻🇪",
+  "Panamá 🇵🇦", "Guatemala 🇬🇹", "Honduras 🇭🇳", "El Salvador 🇸🇻", "Nicarágua 🇳🇮",  "República Dominicana 🇩🇴", "Jamaica 🇯🇲", "Haiti 🇭🇹", "Trinidad e Tobago 🇹🇹", "Barbados 🇧🇧",
+  "Noruega 🇳🇴", "Suécia 🇸🇪", "Finlândia 🇫🇮", "Dinamarca 🇩🇰", "Islândia 🇮🇸",  "Irlanda 🇮🇪", "Suíça 🇨🇭", "Áustria 🇦🇹", "Bélgica 🇧🇪", "Países Baixos 🇳🇱",
+  "Polônia 🇵🇱", "Hungria 🇭🇺", "Tchéquia 🇨🇿", "Eslováquia 🇸🇰", "Romênia 🇷🇴",  "Croácia 🇭🇷", "Sérvia 🇷🇸", "Eslovênia 🇸🇮", "Bulgária 🇧🇬", "Ucrânia 🇺🇦",
+  "Cazaquistão 🇰🇿", "Geórgia 🇬🇪", "Armênia 🇦🇲", "Azerbaijão 🇦🇿", "Irã 🇮🇷",  "Arábia Saudita 🇸🇦", "Emirados Árabes Unidos 🇦🇪", "Israel 🇮🇱", "Paquistão 🇵🇰", "Bangladesh 🇧🇩",
+  "Malásia 🇲🇾", "Singapura 🇸🇬", "Filipinas 🇵🇭", "Camboja 🇰🇭", "Nepal 🇳🇵"
+],
+"Filmes Famosos":["O Poderoso Chefão 🎩", "Titanic 🚢", "Jurassic Park 🦖", "Star Wars ⚔️", "Harry Potter ⚡", 
+"De Volta para o Futuro ⏳", "O Rei Leão 🦁", "Avatar 🔵", "Vingadores 🦸", "Homem-Aranha 🕷️", "Batman 🦇", "Matrix 💊", "Forrest Gump 🏃", "Clube da Luta 👊", "Interestelar 🚀", 
+"Gladiador 🗡️", "Pulp Fiction 🍔", "Cidade de Deus ✝️", "Tropa de Elite 🔫", "Central do Brasil 🚂", "O Auto da Compadecida 😇", "Dona Flor e Seus Dois Maridos 💃", "Capitão América 🛡️", "Pantera Negra 🐾", "Coringa 🃏", 
+"Frozen ❄️", "Toy Story 🤠", "Shrek 🧅", "Os Incríveis 🦸‍♀️", "Procurando Nemo 🐠","Up - Altas Aventuras 🎈", "Divertida Mente 🧠", "Ratatouille 👨‍🍳", "Wall-E 🤖", "Soul 🎷",
+  "O Lobo de Wall Street 💼", "Bohemian Rhapsody 🎤", "Rocketman 🚀",  "La La Land 🎶", "Whiplash 🥁", "O Pianista 🎹", "Amélie Poulain 🇫🇷", "O Fabuloso Destino de Amélie Poulain 💡",
+  "O Discurso do Rei 👑", "12 Anos de Escravidão ⛓️", "A Teoria de Tudo ♿", "O Jogo da Imitação 🧮", "O Menino que Descobriu o Vento 🌬️", "A Lista de Schindler 🕊️", "O Resgate do Soldado Ryan 🎖️", "Dunkirk ⚓", "1917 ⏱️", "Até o Último Homem ⛪",  "Os Miseráveis 🎭", "Chicago 💃", "O Fantasma da Ópera 🎼", "Les Choristes 🎵", "Encanto 🦋",
+  "Red: Crescer é uma Fera 🐼", "Luca 🛵", "Viva - A Vida é uma Festa 💀", "Moana 🌊", "Zootopia 🐰🦊",  "O Curioso Caso de Benjamin Button ⏳", "O Show de Truman 📺", "Her 🤖❤️", "Donnie Darko 🐇", "O Labirinto do Fauno 👁️",
+  "Corra! 🏃‍♂️", "Nós 👥", "Midsommar 🌼", "O Sexto Sentido 👻", "It 🎈",  "Piratas do Caribe ☠️", "King Kong 🦍", "Godzilla 🐲", "O Hobbit 🧙", "O Senhor dos Anéis 💍",
+"Gravidade 🌌", "O Regresso 🐻", "Birdman 🎭", "O Artista 🎬", "O Segredo de Brokeback Mountain 🏞️", "Cisne Negro 🦢", "Réquiem para um Sonho 💉", "Beleza Americana 🌹", "O Quinto Elemento 🔷", "Moonlight 🌙",
+  "Beleza Oculta 🎭", "O Jogo da Imitação 🧠", "O Código Da Vinci 🕵️‍♂️", "Anjos e Demônios 🔱", "Inferno 🔥",  "Fragmentado 🧩", "Coraline 👧🌌", "A Forma da Água 🐠❤️", "O Farol 🕯️", "A Bruxa 🐐",  "Blade Runner 🤖🌆", "Looper 🔄", "Ex_Machina 👁️", "Aniquilação 🌺", "No Limite do Amanhã ⏳⚔️",
+  "Scott Pilgrim Contra o Mundo 🎸", "Kick-Ass 🦸", "Deadpool 🔫😈", "Logan 🐺", "X-Men ❌",  "Capitã Marvel 🌟", "Homem de Ferro 🧲", "Doutor Estranho 🔮", "Guardiões da Galáxia 🚀🎶", "Homem-Formiga 🐜",
+  "O Grande Truque 🎩", "O Ilusionista 🪄", "Cartas para Julieta 💌", "Simplesmente Amor 💘", "Como Eu Era Antes de Você 💔",  "Diário de uma Paixão 📖", "Um Amor para Recordar 🌌", "Questão de Tempo ⏰❤️", "Me Chame Pelo Seu Nome 🍑", "Carol 💄",
+  "O Diabo Veste Prada 👠", "Legalmente Loira 💅", "Meninas Malvadas 💋", "As Patricinhas de Beverly Hills 👛", "Miss Simpatia 👑","O Grande Gatsby 🎉", "A Origem 🌀", "Duna 🌵", "O Som do Silêncio 🔇", "La La Land 🎶",
+  "Whiplash 🥁", "Drive 🚗", "Os Oito Odiados ❄️🔫", "Django Livre 🔫🤠", "Era Uma Vez em... Hollywood 🎬🌇",  "O Irlandês 🧓", "O Lobo de Wall Street 🐺💰", "O Aviador ✈️", "Ilha do Medo 🧠🏝️", "Taxi Driver 🚖🔪",
+  "Scarface 💼🔫", "Os Bons Companheiros 🍝", "Cassino 🎲", "Snatch 🥊", "Rocky 🥊🇺🇸",  "Creed 🥊🔥", "Os Miseráveis 🎭", "Os Intocáveis ♿❤️", "Amélie Poulain 🇫🇷🍰", "O Fabuloso Destino de Amélie Poulain 💫",
+  "O Labirinto do Fauno 🧚🌌", "Roma 🇲🇽🖤", "Parasita 🪳🏠", "Oldboy 🥢🔨", "Trainspotting 💊🏴",  "Her ❤️🤖", "Ela ❤️🖥️", "500 Dias com Ela 💔📆", "O Lado Bom da Vida 🌦️❤️", "Pequena Miss Sunshine 👑🌻",
+  "Quase Famosos 🎸🚌", "Escola de Rock 🎸👨‍🏫", "Napoleon Dynamite 🧀🕺", "O Show de Truman 📺🌎", "Click ⏯️",  "As Branquelas 🎭👩‍🦳", "Ace Ventura 🦜🕵️", "O Máskara 😷💚", "Debi & Lóide 🤪🚐", "Todo Mundo em Pânico 😱😂",
+  "Se Beber, Não Case! 🍻🐯", "American Pie 🥧", "Superbad 🍻🎉", "Projeto X 🎧🔥", "Anjos da Lei 👮🎓"
+],
+  "Animais":["Cachorro 🐶", "Gato 🐱", "Leão 🦁", "Tigre 🐯", "Elefante 🐘", "Girafa 🦒", "Macaco 🐒", "Cavalo 🐴", "Vaca 🐮", "Galinha 🐔", "Pato 🦆", "Águia 🦅", "Tubarão 🦈", "Golfinho 🐬", "Panda 🐼", "Coala 🐨", "Zebra 🦓", "Rinoceronte 🦏", "Hipopótamo 🦛", "Crocodilo 🐊", 
+"Jacaré 🐊", "Cobra 🐍", "Borboleta 🦋", "Abelha 🐝", "Formiga 🐜", "Aranha 🕷️", "Caranguejo 🦀", "Polvo 🐙", "Estrela-do-mar ⭐", "Pinguim 🐧","Coruja 🦉", "Papagaio 🦜", "Tucano 🐦", "Beija-flor 🌸", "Camelo 🐫", 
+"Esquilo 🐿️", "Raposa 🦊", "Lobo 🐺", "Urso 🐻", "Panda Vermelho 🦝","Tamanduá 🐜👅", "Tatu 🦔", "Capivara 🦫", "Bicho-preguiça 🦥", "Anta 🐗",  "Gavião 🦅", "Falcão 🦅", "Corvo 🪶", "Morcego 🦇", "Lêmure 🐒",
+  "Ornitorrinco 🦫", "Canguru 🦘", "Ema 🐦", "Avestruz 🐣", "Jacaré-açu 🐊", "Iaque 🐃", "Búfalo 🐃", "Alce 🦌", "Rena ❄️🦌", "Cervo 🦌",  "Lêmure 🐵", "Texugo 🦡", "Lontra 🦦", "Foca 🦭", "Morsa ❄️🐘",
+  "Narval 🐋", "Baleia 🐳", "Orca 🐋", "Peixe-palhaço 🐠", "Peixe-boi 🐋",  "Camarão 🦐", "Lagosta 🦞", "Enguia 🐍🌊", "Medusa 🌊🪼", "Cavalo-marinho 🌊🐴",
+  "Galo 🐓", "Pavão 🦚", "Codorna 🐦", "Ganso 🪿", "Corvo-marinho 🐦‍⬛",  "Guepardo 🐆", "Onça-pintada 🐆🇧🇷", "Lêmure 🐾", "Chinchila 🐹", "Hamster 🐹",
+  "Porquinho-da-índia 🐹🇵🇪", "Rato 🐀", "Camaleão 🦎", "Lagartixa 🦎", "Sapo 🐸",  "Rã 🐸🌧️", "Tartaruga 🐢", "Jabuti 🐢", "Caracol 🐌", "Lesma 🐌🌧️"
+],
+  "Lendas Famosas  👻":["Saci-Pererê 🧢 (Brasil)", "Curupira 🔥 (Brasil)", "Iara 🧜‍♀️ (Brasil)","Boto-Cor-de-Rosa 🐬 (Brasil)", "Mula Sem Cabeça 🐴 (Brasil)", "Lobisomem 🌕 (Mundial)", "Vampiro 🧛 (Mundial)", "Frankenstein 👹 (Mundial)", "Zumbi 🧟 (Mundial)","Pé Grande 🦶 (Mundial)", "Monstro do Lago Ness 🏴󠁧󠁢󠁳󠁣󠁴󠁿 (Escócia)", 
+"Chupacabra 🐐 (América Latina)", "Fênix 🔥 (Mundial)", "Dragão 🐉 (Mundial)", "Unicórnio 🦄 (Mundial)", "Medusa 🐍 (Grécia)", "Sereia 🧜‍♀️ (Mundial)", "Kraken 🦑 (Mundial)", "Fantasma 👻 (Mundial)", 
+"Bruxa 🧙‍♀️ (Mundial)",  "Boitatá 🔥 (Brasil)",  "Caipora 🏹 (Brasil)", "Troll 🧌 (Noruega)",  "Gárgula 🗿 (França)","Medusa 🐍 (Grécia)",  "Minotauro 🐂 (Grécia)", "Quimera 🐐🦁🐍 (Grécia)", "Esfinge 🦁👩 (Grécia)",  "Hidra de Lerna 🐉 (Grécia)",  "Cerbero 🐶🔥 (Grécia)",  "Ciclopes 👁️ (Grécia)",
+  "Centauro 🐎👨 (Grécia)",  "Sátiro 🐐👨 (Grécia)",  "Ninfa 🌿 (Grécia)",  "Sereia 🧜‍♀️ (Grécia)",  "Grifo 🦅🦁 (Grécia)",  "Pegaso 🐎🪽 (Grécia)", "Aracne 🕷️ (Grécia)",  "Tifão 🌪️ (Grécia)",  "Équidna 🐍👩 (Grécia)",  "Caríbdis 🌊 (Grécia)",  "Escila 🐙👩 (Grécia)",  "Harpias 🦅👩 (Grécia)",
+  "Górgonas 🐍👩 (Grécia)"
+],
+  "Expressões e Gírias Baianas": [  "Oxente! 😲 (surpresa)",  "Arretado! 🤩 (incrível)",  "Bahia é o paraíso! 🌴",  "Coisa fina! 👌 (muito bom)",  "Tá amarrado! 🙅 (não acredito)",  "Bicho, tá doido!? 🐒 (tá brincando?)",
+  "Vixe Maria! 🙏 (espanto)",  "Êta trem bão! 👍 (muito bom)",  "Que saco! 😩 (chato)",  "Tá ligado? 🤔 (entendeu?)",  "Mermão! 🤜🤛 (cara/irmão)",  "Firmeza! ✊ (tudo bem)",  "Pode crer! 🙌 (concordo)",  "Tá sussa! 😎 (tá tranquilo)",
+  "Barril! 🍻 (festa)",  "Chocado! 🤯 (impressionado)",  "Tá parecendo jaca! 🤪 (estranho)",  "Vambora! 🚶‍♂️ (vamos embora)",  "Tá doidão? 🤪 (tá maluco?)",  "É os guri! 👊 (galera)",  "Tá saindo da jaula! 🦍 (ficando louco)",  "Colé, meu bródi! 👋 (olá, meu amigo)",
+  "Fala, pai! 🙌 (e aí, amigo)",  "Êa! Bó pu regui? 🎶 (vamos para a festa?)",  "Tá zero bala! 🆕 (está novo)",  "Aondeee! 😲 (não acredito)",  "Quem souber morre! 🤷‍♂️ (não sei)",  "Paletada! 🚶‍♂️ (andar muito)",  "Romper o ano! 🎉 (passar o ano novo)",
+  "Não sou baú! 🗣️ (falo mesmo)",  "Tem uma cara! ⏳ (faz tempo)",  "Se plante! 🪴 (fique na sua)",  "Axé! ✨ (te desejo tudo de bom)",  "Se saia! 🚫 (de jeito nenhum)",
+  "Zuada! 🔊 (barulho)",  "De hoje a quinze! 📅 (daqui a duas semanas)",  "Tô na larica! 🍔 (tô com muita fome)", "Baratino! 🤥 (mentira)",  "Brocar! 💥 (mandar muito bem)",  "Sua cara nem arde! 😳 (você não tem vergonha na cara)",  "Pão de sal! 🥖 (pão francês)", "Lá ele! 🙈 (expressão para evitar mal-entendidos)",
+  "Laranjada! 🍊 (situação ruim)",  "Comer água! 🍻 (beber álcool)",  "Se pique! 🏃‍♂️ (vá embora)", "Zuera! 😂 (brincadeira)",  "Zum-zum-zum! 🗣️ (fofoca)",  "Zunhada! 😡 (xingamento)",  "Zureta! 🤪 (desorientado)",  "Me passei! 😅 (dei vexame)",  "Maresia! 😴 (preguiça)",  "Vou catar coquinho! 🌴 (vá se danar)",  "Tô de gastação! 😜 (estou brincando)",  "Tô cabrêro! 😬 (desconfiado)",  "Tô em água! 🍺 (bêbado)",  "Fazer o corre! 🏃 (agilizar)",  "Porra nenhuma, mermão! ❌ (discordo totalmente)"
+]
+};
+
+  let palavras = [];
+  let currentTeam = 1;
+  let scores = { 1: 0, 2: 0 };
+  let timerInterval;
+  let timeLeft = 60;
+  let isTimerRunning = false;
+  let senhaCorreta = "leo";
+  let senhaVerificada = sessionStorage.getItem('senhaVerificada');
+  let floatingLetterElement = null; 
+
+  const themeSelect = document.getElementById("themeSelect");
+  const wordDisplay = document.getElementById("word");
+  const gameDiv = document.getElementById("game");
+  const timerDisplay = document.getElementById("timer");
+  const scoreboardDiv = document.getElementById("scoreboard");
+  const themeSelectionDiv = document.getElementById("themeSelection");
+  const modeSelectionDiv = document.getElementById("modeSelection");
+  const teamSelectionDiv = document.getElementById("teamSelection");
+  const score1Span = document.getElementById("score1");
+  const score2Span = document.getElementById("score2");
+  const body = document.body;
+  const alarmSound = document.getElementById("alarmSound");
+  const conteudoDiv = document.getElementById("conteudo");
+  const inicioButton = document.getElementById("inicioButton");
+
+
+  function updateScoreboard() {
+  score1Span.textContent = scores[1];
+  score2Span.textContent = scores[2];
+  }
+
+  function showThemeSelector() {
+  modeSelectionDiv.style.display = "none";
+  themeSelectionDiv.style.display = "block";
+  themeSelect.innerHTML = "";
+  for (let tema in temas) {
+  const option = document.createElement("option");
+  option.value = tema;
+  option.textContent = tema;
+  themeSelect.appendChild(option);
+  }
+  }
+
+  function startShuffledMode() {
+  palavras = Object.values(temas).flat();
+  shuffleArray(palavras);
+  modeSelectionDiv.style.display = "none";
+  teamSelectionDiv.style.display = "block";
+  }
+
+  function selectStartingTeam() {
+  const temaSelecionado = themeSelect.value;
+  palavras = [...temas[temaSelecionado]];
+  shuffleArray(palavras);
+  themeSelectionDiv.style.display = "none";
+  teamSelectionDiv.style.display = "block";
+  }
+
+  function startGame(team) {
+  currentTeam = team;
+  updateFloatingLetter(); 
+  teamSelectionDiv.style.display = "none";
+  gameDiv.style.display = "block";
+  if (!isTimerRunning) {
+  startTimer();
+  isTimerRunning = true;
+  }
+  nextWord();
+  updateScoreboard();
+  }
+
+  function updateFloatingLetter() {
+  
+  if (floatingLetterElement) {
+  floatingLetterElement.remove();
+  floatingLetterElement = null;
+  }
+
+  if (gameDiv.style.display === "block") {
+  floatingLetterElement = document.createElement('div');
+  floatingLetterElement.classList.add('floating-letter');
+  floatingLetterElement.textContent = currentTeam === 1 ? 'A' : 'B';
+  body.appendChild(floatingLetterElement);
+  }
+  }
+
+  function nextWord() {
+  if (palavras.length === 0) {
+  alert(`Fim das palavras para a Equipe ${currentTeam}!`);
+  switchTeam();
+  return;
+  }
+  const word = palavras.shift();
+  wordDisplay.textContent = word;
+  }
+
+  function correctGuess() {
+  scores[currentTeam]++;
+  updateScoreboard();
+  nextWord();
+  verificarFimDoJogo();
+  }
+
+  function startTimer() {
+  timeLeft = 60;
+  updateTimerDisplay();
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+  timeLeft--;
+  updateTimerDisplay();
+  if (timeLeft <= 0) {
+  clearInterval(timerInterval);
+  isTimerRunning = false;
+  switchTeam();
+  }
+  }, 1000);
+  }
+
+  function updateTimerDisplay() {
+  timerDisplay.textContent = `Tempo: ${timeLeft}s`;
+  timerDisplay.className = timeLeft <= 10 ? "warning" : "";
+  if (timeLeft <= 10 && timeLeft > 0) {
+  timerDisplay.classList.add("alarm");
+  alarmSound.play();
+  } else {
+  timerDisplay.classList.remove("alarm");
+  alarmSound.pause();
+  alarmSound.currentTime = 0;
+  }
+  }
+
+  function switchTeam() {
+  currentTeam = currentTeam === 1 ? 2 : 1;
+  updateFloatingLetter(); 
+  alert(`Agora é a vez da Equipe ${currentTeam}!`);
+  isTimerRunning = false;
+  if (palavras.length === 0 && Object.values(temas).flat().length > 0) {
+  if (document.getElementById("themeSelection").style.display === "block") {
+  const temaSelecionado = themeSelect.value;
+  palavras = [...temas[temaSelecionado]];
+  shuffleArray(palavras);
+  } else {
+  palavras = Object.values(temas).flat();
+  shuffleArray(palavras);
+  }
+  }
+  startTimer();
+  isTimerRunning = true;
+  nextWord();
+  }
+
+  function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [array[i], array[j]] = [array[j], array[i]];
+  }
+  }
+
+  function inicio() {
+  location.reload();
+  }
+
+  function verificarFimDoJogo() {
+  if (scores[1] >= 50 || scores[2] >= 50) {
+  clearInterval(timerInterval);
+  isTimerRunning = false;
+  alert(scores[1] > scores[2] ? "Parabéns Equipe A!" : "Parabéns Equipe B!");
+  resetGame();
+  }
+  }
+
+  function resetGame() {
+  scores[1] = 0;
+  scores[2] = 0;
+  updateScoreboard();
+  gameDiv.style.display = "none";
+  modeSelectionDiv.style.display = "block";
+  palavras = [];
+  currentTeam = 1;
+  
+  if (floatingLetterElement) {
+  floatingLetterElement.remove();
+  floatingLetterElement = null;
+  }
+  }
+
+  if (!senhaVerificada) {
+  const senha = prompt("Digite a senha para acessar:");
+  if (senha === senhaCorreta) {
+  sessionStorage.setItem('senhaVerificada', 'true');
+  conteudoDiv.style.display = "block";
+  } else {
+  alert("Senha incorreta!");
+  document.body.innerHTML = "<h1>Acesso negado</h1>";
+  }
+  } else {
+  conteudoDiv.style.display = "block";
+  }
+
+  if (gameDiv.style.display === "block") {
+  updateFloatingLetter();
+  }
+  </script>
+ </body>
+ </html>
