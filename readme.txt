@@ -1,5 +1,5 @@
-🎮 Take a Move!
-Take a Move! é um jogo de palavras dinâmico e educativo, ideal para jogar em grupo. Ele promove interação, agilidade mental e diversão, alternando equipes e desafiando os jogadores a acertarem o máximo de palavras dentro de um tempo limitado.
+🎮 make a Move!
+make a Move! é um jogo de palavras dinâmico e educativo, ideal para jogar em grupo. Ele promove interação, agilidade mental e diversão, alternando equipes e desafiando os jogadores a acertarem o máximo de palavras dentro de um tempo limitado.
 
 📋 Funcionalidades
 🔄 Alternância automática entre Equipe 1 (fundo azul) e Equipe 2 (fundo vermelho).
