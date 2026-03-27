@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Make a Move! — O jogo de palavras mais divertido para grupos. Adivinhe, gesticule, faça mímica e vença!">
+  <title>🎮 Make a Move! — O jogo de palavras</title>
+  <link rel="shortcut icon" href="./3.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ░░ FUNDO ANIMADO ░░ -->
+  <div class="bg-gradient" aria-hidden="true"></div>
+
+  <!-- ░░ BOTÃO DE MUDO (sempre fixo durante o jogo) ░░ -->
+  <button id="muteButton" class="mute-btn" onclick="toggleMute()" aria-label="Mudo/Som" style="display:none">🔊</button>
+
+  <!-- ░░ LETRA FLUTUANTE DA EQUIPE ░░ -->
+  <div id="floatingTeam" class="floating-team" aria-hidden="true" style="display:none"></div>
+
+  <!-- ═══════════════════════════════════════════════════
+       TELA 1 — SENHA
+       ═══════════════════════════════════════════════════ -->
+  <div id="screen-password" class="screen" role="main">
+    <div class="glass-card card-center">
+      <span class="logo" aria-hidden="true">🔄🤡💃</span>
+      <h1>Make a Move!</h1>
+      <p class="subtitle">O jogo de palavras mais animado para você e seus amigos!</p>
+      <div class="input-group">
+        <input
+          type="password"
+          id="passwordInput"
+          class="glass-input"
+          placeholder="Digite a senha..."
+          aria-label="Senha de acesso"
+          autocomplete="current-password"
+        >
+        <button id="btnEnter" onclick="Auth.verify()" class="btn-primary btn-block" aria-label="Entrar">
+          Entrar 🚀
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       TELA 2 — BOAS-VINDAS / MODO
+       ═══════════════════════════════════════════════════ -->
+  <div id="screen-welcome" class="screen" role="main">
+    <div class="glass-card card-center">
+      <span class="logo" aria-hidden="true">🔄🤡💃</span>
+      <h1>Make a Move!</h1>
+      <p class="subtitle">Escolha o modo de jogo para começar</p>
+
+      <div class="btn-group-vertical">
+        <button id="btnModeShuffled" onclick="Game.setMode('shuffled')" class="btn-primary" aria-label="Modo Alternativo">
+          🔀 Modo Alternativo
+          <span class="btn-desc">Todos os temas misturados</span>
+        </button>
+        <button id="btnModeTheme" onclick="Game.setMode('theme')" class="btn-secondary" aria-label="Modo por Temas">
+          🎯 Modo por Temas
+          <span class="btn-desc">Escolha um tema específico</span>
+        </button>
+      </div>
+
+      <div class="access-counter" aria-label="Contador de visitas">
+        <span aria-hidden="true">👁️</span>
+        <span id="accessCount">0</span>
+        <span>visitas totais</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       TELA 3 — SELEÇÃO DE TEMA
+       ═══════════════════════════════════════════════════ -->
+  <div id="screen-theme" class="screen" role="main">
+    <div class="glass-card card-large">
+      <h2>🎯 Escolha um Tema</h2>
+      <p class="subtitle">Selecione o tema das palavras para esta rodada</p>
+      <div id="themeGrid" class="theme-grid" role="list" aria-label="Temas disponíveis"></div>
+      <button id="btnBackFromTheme" onclick="UI.showScreen('screen-welcome')" class="btn-ghost" aria-label="Voltar">
+        ← Voltar
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       TELA 4 — TEMPO POR RODADA
+       ═══════════════════════════════════════════════════ -->
+  <div id="screen-time" class="screen" role="main">
+    <div class="glass-card card-center">
+      <h2>⏱️ Tempo por Rodada</h2>
+      <p class="subtitle">Quanto tempo cada equipe terá para jogar?</p>
+
+      <div class="time-options" role="group" aria-label="Opções de tempo">
+        <button id="time-30" onclick="Game.setTime(30)" class="btn-time" aria-label="30 segundos">
+          <span class="time-value">30s</span>
+          <span class="time-label">Explosivo! 🔥</span>
+        </button>
+        <button id="time-60" onclick="Game.setTime(60)" class="btn-time" aria-label="60 segundos">
+          <span class="time-value">60s</span>
+          <span class="time-label">Padrão ⭐</span>
+        </button>
+        <button id="time-90" onclick="Game.setTime(90)" class="btn-time" aria-label="90 segundos">
+          <span class="time-value">90s</span>
+          <span class="time-label">Relaxado 😌</span>
+        </button>
+      </div>
+
+      <button id="btnConfirmTime" onclick="UI.showScreen('screen-team')" class="btn-primary btn-block" aria-label="Confirmar tempo">
+        Confirmar ✔️
+      </button>
+      <button id="btnBackFromTime" onclick="UI.goBack()" class="btn-ghost" aria-label="Voltar">
+        ← Voltar
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       TELA 5 — SELEÇÃO DE EQUIPE
+       ═══════════════════════════════════════════════════ -->
+  <div id="screen-team" class="screen" role="main">
+    <div class="glass-card card-center">
+      <h2>👥 Quem começa?</h2>
+      <p class="subtitle">Escolha a equipe que dará início à primeira rodada</p>
+
+      <div class="team-buttons">
+        <button id="btnTeamA" onclick="Game.startGame(1)" class="btn-team-a" aria-label="Equipe A começa">
+          <span class="team-letter">A</span>
+          Equipe A
+        </button>
+        <button id="btnTeamB" onclick="Game.startGame(2)" class="btn-team-b" aria-label="Equipe B começa">
+          <span class="team-letter">B</span>
+          Equipe B
+        </button>
+      </div>
+
+      <button id="btnBackFromTeam" onclick="UI.showScreen('screen-time')" class="btn-ghost" aria-label="Voltar">
+        ← Voltar
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       TELA 6 — JOGO
+       ═══════════════════════════════════════════════════ -->
+  <div id="screen-game" class="screen" role="main" aria-label="Tela do jogo">
+
+    <!-- Placar -->
+    <div class="scoreboard glass-bar" role="status" aria-live="polite" aria-label="Placar">
+      <div class="score-team score-a" aria-label="Pontuação Equipe A">
+        <span class="score-label">Equipe A</span>
+        <span class="score-value" id="score1" aria-live="polite">0</span>
+      </div>
+      <div class="score-divider" aria-hidden="true">VS</div>
+      <div class="score-team score-b" aria-label="Pontuação Equipe B">
+        <span class="score-label">Equipe B</span>
+        <span class="score-value" id="score2" aria-live="polite">0</span>
+      </div>
+    </div>
+
+    <!-- Indicador de turno -->
+    <div id="turnIndicator" class="turn-indicator" role="status" aria-live="polite">—</div>
+
+    <!-- Palavra atual -->
+    <div class="glass-card word-card" role="region" aria-label="Palavra atual">
+      <div id="wordDisplay" class="word-display" aria-live="polite" aria-atomic="true">—</div>
+    </div>
+
+    <!-- Timer -->
+    <div class="timer-section" aria-label="Temporizador" role="timer">
+      <div id="timerText" class="timer-text" aria-live="assertive">60s</div>
+      <div class="timer-bar-bg" aria-hidden="true">
+        <div id="timerBarFill" class="timer-bar-fill"></div>
+      </div>
+    </div>
+
+    <!-- Botões de ação -->
+    <div class="game-buttons" role="group" aria-label="Ações do jogo">
+      <button id="btnSkip"    onclick="Game.skipWord()"     class="btn-skip"    aria-label="Pular palavra">  ⏭️<br>Pular    </button>
+      <button id="btnCorrect" onclick="Game.correctGuess()" class="btn-correct" aria-label="Palavra acertada">✅<br>Acertamos!</button>
+      <button id="btnPause"   onclick="Game.togglePause()"  class="btn-pause"   aria-label="Pausar jogo">    ⏸️<br>Pausar   </button>
+    </div>
+
+    <!-- Mini-histórico -->
+    <div class="mini-history" aria-live="polite">
+      ✅ <span id="correctCount">0</span> acertos &nbsp;|&nbsp;
+      ⏭️ <span id="skippedCount">0</span> puladas
+    </div>
+
+    <!-- Botão de voltar ao início -->
+    <button id="btnHome" onclick="Game.confirmReset()" class="btn-home" aria-label="Voltar ao início">
+      🏠 Início
+    </button>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       TELA 7 — CONFIRMAÇÃO / TROCA DE EQUIPE
+       ═══════════════════════════════════════════════════ -->
+  <div id="screen-confirm" class="screen overlay-screen" role="dialog" aria-modal="true" aria-label="Confirmação de início">
+    <div class="glass-card card-confirm">
+      <div id="confirmIcon" class="confirm-icon" aria-hidden="true">🔄</div>
+      <h2 id="confirmTitle">Pronto?</h2>
+      <p id="confirmMessage">Preparem-se para começar!</p>
+      <button id="confirmContinueBtn" onclick="Game.continueGame()" class="btn-primary btn-block" aria-label="Iniciar rodada">
+        Vamos lá! 🚀
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       TELA 8 — HISTÓRICO DA RODADA
+       ═══════════════════════════════════════════════════ -->
+  <div id="screen-history" class="screen overlay-screen" role="dialog" aria-modal="true" aria-label="Histórico da rodada">
+    <div class="glass-card card-history">
+      <h2>📊 Histórico da Rodada</h2>
+      <p id="historyTeamLabel" class="subtitle"></p>
+
+      <div class="history-section">
+        <h3>✅ Acertos (<span id="historyCorrectCount">0</span>)</h3>
+        <ul id="historyCorrectList" class="history-list correct-list" aria-label="Palavras acertadas"></ul>
+      </div>
+
+      <div class="history-section">
+        <h3>⏭️ Puladas (<span id="historySkippedCount">0</span>)</h3>
+        <ul id="historySkippedList" class="history-list skipped-list" aria-label="Palavras puladas"></ul>
+      </div>
+
+      <button id="btnNextTeam" onclick="Game.nextTeamTurn()" class="btn-primary btn-block" aria-label="Próxima equipe">
+        Próxima Equipe ➡️
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       MODAL — CONFIRMAR RESET
+       ═══════════════════════════════════════════════════ -->
+  <div id="modal-reset" class="modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-label="Confirmar saída do jogo">
+    <div class="glass-card modal-card">
+      <h3>⚠️ Voltar ao início?</h3>
+      <p class="subtitle" style="margin-bottom:0">O progresso da partida será perdido.</p>
+      <div class="modal-buttons">
+        <button id="btnConfirmReset" onclick="Game.resetGame()" class="btn-danger" aria-label="Confirmar saída">
+          Sim, sair
+        </button>
+        <button id="btnCancelReset" onclick="UI.closeModal('modal-reset')" class="btn-ghost" aria-label="Cancelar">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ░░ ÁUDIO ░░ -->
+  <audio id="alarmSound" src="./kitchen-timer-87485.mp3" loop   preload="auto"></audio>
+  <audio id="startSound" src="./gamestart.mp3"           preload="auto"></audio>
+
+  <!-- ░░ SCRIPTS ░░ -->
+  <script src="data.js"></script>
+  <script src="counter.js"></script>
+  <script src="game.js"></script>
+
+</body>
+</html>
