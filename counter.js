@@ -1,8 +1,3 @@
-/**
- * counter.js — Make a Move!
- * Contador de acessos persistido em localStorage.
- */
-
 const Counter = (() => {
   const STORAGE_KEY = 'makeAmoveVisits';
 
