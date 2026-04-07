@@ -1,9 +1,3 @@
-/**
- * data.js — Make a Move!
- * Banco de palavras de todos os temas do jogo.
- * Para adicionar um novo tema, basta adicionar uma nova chave no objeto TEMAS.
- */
-
 const TEMAS = {
 
   "🍞👨‍🍳 Profissões": [
@@ -15,20 +9,13 @@ const TEMAS = {
     "Músico 🎵","Ator 🎬","Cantor 🎤","Escritor ✍️","Economista 💰",
     "Contador 🧮","Administrador 📊","Vendedor 💼","Jogador de Futebol ⚽","Nutricionista 🥗",
     "Fisioterapeuta 💪","Biólogo 🔬","Astronauta 🚀","Pesquisador 🔍","Motorista 🚗",
-    "Corretor 🏠","Segurança 🛡️","Juiz ⚖️","DJ 🎧","Youtuber 📹",
-    "Influencer 🌟","Tatuador 🖋️","Barbeiro ✂️","Costureiro 🧵","Marinheiro ⚓",
-    "Soldado 🪖","Meteorologista 🌦️","Oceanógrafo 🌊","Chef de Cozinha 👨‍🍳","Maquiador 💄",
-    "Piloto de Drones 🛸","Cientista de Dados 📈","Analista de Sistemas 🖥️","Tradutor 🌐","Terapeuta 👐",
-    "Babá 👶","Cuidador de Idosos 👵","Zelador 🧹","Porteiro 🛎️","Recepcionista 🧾",
-    "Bibliotecário 📖","Instrutor de Yoga 🧘","Coach 🌟","Motoboy 🛵","Pescador 🎣",
-    "Guia Turístico 🌍","Cerimonialista 🎊","Estilista 👠","Piloto de Helicóptero 🚁","Paramédico 🚑",
-    "Radialista 📻","Operador de Caixa 💳","Serralheiro 🛠️","Técnico em Informática 🧰","Pedreiro 🧱",
-    "Pintor 🎨","Marceneiro 🪑","Sapateiro 👞","Lavador de Carros 🧽","Fiscal de Loja 🧾"
+    "Corretor 🏠","Segurança 🛡️","Juiz ⚖️","DJ 🎧","Youtuber 📹","Influencer 🌟","Tatuador 🖋️","Barbeiro ✂️","Costureiro 🧵","Marinheiro ⚓","Soldado 🪖","Meteorologista 🌦️","Oceanógrafo 🌊","Chef de Cozinha 👨‍🍳","Maquiador 💄", "Piloto de Drones 🛸","Cientista de Dados 📈","Analista de Sistemas 🖥️","Tradutor 🌐","Terapeuta 👐",
+    "Babá 👶","Cuidador de Idosos 👵","Zelador 🧹","Porteiro 🛎️","Recepcionista 🧾", "Bibliotecário 📖","Instrutor de Yoga 🧘","Coach 🌟","Motoboy 🛵","Pescador 🎣", "Guia Turístico 🌍","Cerimonialista 🎊","Estilista 👠","Piloto de Helicóptero 🚁","Paramédico 🚑",
+    "Radialista 📻","Operador de Caixa 💳","Serralheiro 🛠️","Técnico em Informática 🧰","Pedreiro 🧱", "Pintor 🎨","Marceneiro 🪑","Sapateiro 👞","Lavador de Carros 🧽","Fiscal de Loja 🧾"
   ],
 
-  "🔑🗝️ Objetos": [
-    "Clipes de papel 🖇️","Grampeador 📎","Borracha 🧽","Régua 📏","Apontador ✏️",
-    "Envelope ✉️","Etiqueta 🏷️","Calculadora 🧮","Projetor 📽️","Tela de projeção 🖥️",
+  "🔑 Objetos": [
+    "Clipes de papel 🖇️","Grampeador 📎","Borracha 🧽","Régua 📏","Apontador ✏️","Envelope ✉️","Etiqueta 🏷️","Calculadora 🧮","Projetor 📽️","Tela de projeção 🖥️",
     "Capacete ⛑️","Escada 🪜","Trena 📏","Fita adesiva 🧷","Cadeira de rodas ♿",
     "Carrinho de compras 🛒","Carrinho de bebê 👶","Tapete 🪵","Almofada 🛏️","Cobertor 🛌",
     "Travesseiro 💤","Guarda-roupa 🚪","Abajur 🛋️","Fogareiro 🏕️","Barraca ⛺",
