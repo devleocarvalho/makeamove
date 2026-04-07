@@ -9,7 +9,7 @@ const TEMAS = {
     "Músico 🎵","Ator 🎬","Cantor 🎤","Escritor ✍️","Economista 💰",
     "Contador 🧮","Administrador 📊","Vendedor 💼","Jogador de Futebol ⚽","Nutricionista 🥗",
     "Fisioterapeuta 💪","Biólogo 🔬","Astronauta 🚀","Pesquisador 🔍","Motorista 🚗",
-    "Corretor 🏠","Segurança 🛡️","Juiz ⚖️","DJ 🎧","Youtuber 📹","Influencer 🌟","Tatuador 🖋️","Barbeiro ✂️","Costureiro 🧵","Marinheiro ⚓","Soldado 🪖","Meteorologista 🌦️","Oceanógrafo 🌊","Chef de Cozinha 👨‍🍳","Maquiador 💄", "Piloto de Drones 🛸","Cientista de Dados 📈","Analista de Sistemas 🖥️","Tradutor 🌐","Terapeuta 👐",
+    "Corretor 🏠","Segurança 🛡️","Juiz ⚖️","DJ 🎧","Youtuber 📹","Influencer 🌟","Tatuador 🖋️","Barbeiro ✂️","Costureiro 🧵","Marinheiro ⚓","Soldado 🪖","Meteorologista 🌦️","Oceanógrafo 🌊","Maquiador 💄", "Piloto de Drones 🛸","Cientista de Dados 📈","Analista de Sistemas 🖥️","Tradutor 🌐","Terapeuta 👐",
     "Babá 👶","Cuidador de Idosos 👵","Zelador 🧹","Porteiro 🛎️","Recepcionista 🧾", "Bibliotecário 📖","Instrutor de Yoga 🧘","Coach 🌟","Motoboy 🛵","Pescador 🎣", "Guia Turístico 🌍","Cerimonialista 🎊","Estilista 👠","Piloto de Helicóptero 🚁","Paramédico 🚑",
     "Radialista 📻","Operador de Caixa 💳","Serralheiro 🛠️","Técnico em Informática 🧰","Pedreiro 🧱", "Pintor 🎨","Marceneiro 🪑","Sapateiro 👞","Lavador de Carros 🧽","Fiscal de Loja 🧾"
   ],
@@ -178,9 +178,7 @@ const TEMAS = {
     "Kill Bill ⚔️",
     "Seven: Os Sete Crimes Capitais 📦",
     "Coração Valente ⚔️🛡️",
-    "Beetlejuice 👻",
-    "Singin' in the Rain ☔",
-    "Grease - Nos Tempos da Brilhantina 🕺"
+    "Beetlejuice 👻"
   ],
 
   "🦧🐩 Animais": [
@@ -576,7 +574,7 @@ const TEMAS = {
     "Atletismo 🏃","Ginástica Artística 🤸","Judô 🥋","Boxe 🥊","Surf 🏄",
     "Fórmula 1 🏎️","Ciclismo 🚴","Esqui ⛷️","Patinação ⛸️","Hipismo 🐎",
     "Golf ⛳","Rugby 🏉","Handebol 🤾","Polo Aquático 🏊","Remo 🚣",
-    "Pelé ⚽👑","Ronaldo Fenômeno 🇧🇷","Ronaldinho Gaúcho 🎩","Neymar 🇧🇷","Messi",
+    "Pelé ⚽👑","Ronaldo Fenômeno 🇧🇷","Ronaldinho Gaúcho 🎩","Neymar 🇧🇷","Messi 🇦🇷",
     "Cristiano Ronaldo 🇵🇹","Mbappé ⚡","Haaland 🎯","Vini Jr 🇧🇷","Endrick 🌟",
     "Ayrton Senna 🏎️","Michael Schumacher 🏎️","Lewis Hamilton 🏆","Max Verstappen 🔵","Fernando Alonso ⭐",
     "Serena Williams 🎾","Roger Federer 🎾","Rafael Nadal 🌟","Djokovic 🎾","Carlos Alcaraz 🌹",
